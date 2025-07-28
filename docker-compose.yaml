@@ -1,0 +1,49 @@
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.6.2
+    container_name: meilisearch
+    environment:
+      - MEILI_MASTER_KEY=supersecretkey
+    ports:
+      - '7700:7700'
+    volumes:
+      - novetedlease_meili_data:/meili_data
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - MEILI_MASTER_KEY=supersecretkey
+      - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
+      - REDIS_HOST=redis
+      - MEILISEARCH_HOST=http://meilisearch:7700
+      - BACKEND_HOST=http://localhost:3001
+    depends_on:
+      - redis
+      - meilisearch
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    stdin_open: true
+    tty: true
+
+volumes:
+  novetedlease_meili_data:
+    external: true

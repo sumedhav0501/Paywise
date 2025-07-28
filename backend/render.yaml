@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: Paywise_Backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    branch: main
