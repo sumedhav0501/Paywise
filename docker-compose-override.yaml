@@ -33,6 +33,8 @@ services:
     depends_on:
       - redis
       - meilisearch
+    volumes:
+      - ./backend:/app
 
   frontend:
     build: ./frontend
