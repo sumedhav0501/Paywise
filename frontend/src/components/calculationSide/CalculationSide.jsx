@@ -88,7 +88,7 @@ const CalculationSide = ({ car, onClose }) => {
 
   if (!car) {
     return (
-      <div className="bg-white sm:p-0 p-3 w-full rounded-lg shadow-md sm:gap-4">
+      <div className="bg-white sm:p-0 p-3 w-full rounded-lg shadow-md sm:gap-4 h-full">
         <div className="flex justify-between items-center mb-4">
           <h2 className="sm:text-xl font-semibold sm:text-[30px]">No Car Selected</h2>
           <button onClick={onClose} className="text-red-500 font-bold">X</button>
@@ -132,11 +132,11 @@ const CalculationSide = ({ car, onClose }) => {
             <hr className='w-full' />
 
           </div>
-          <Savings />
+          {/* <Savings /> */}
 
           <div className='w-full flex items-center justify-between'>
             <p className='font-bold text-lg'>Total</p>
-            <p className='font-bold text-lg'>$30,000</p>
+            <p className='font-bold text-lg'>${getLeaseCost()}</p>
           </div>
         </>
       )}
