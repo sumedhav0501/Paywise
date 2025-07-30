@@ -3,13 +3,11 @@ version: "3.8"
 services:
   redis:
     image: redis:latest
-    container_name: redis
     ports:
       - '6379:6379'
 
   meilisearch:
     image: getmeili/meilisearch:v1.6.2
-    container_name: meilisearch
     environment:
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     ports:
@@ -19,7 +17,6 @@ services:
 
   backend:
     build: ./backend
-    container_name: backend
     ports:
       - '3001:3001'
     environment:
@@ -28,8 +25,8 @@ services:
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
       - REDIS_HOST=redis
-      - MEILISEARCH_HOST=${MEILISEARCH_HOST}
-      - BACKEND_HOST=${BACKEND_HOST}
+      - MEILISEARCH_HOST=http://meilisearch:7700
+      - BACKEND_HOST=http://backend:3001
       - FRONTEND_URL=${FRONTEND_URL}
       - PFX_CERT_PATH=${PFX_CERT_PATH}
       - PFX_CERT_PASSWORD=${PFX_CERT_PASSWORD}
@@ -43,15 +40,13 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: frontend
     ports:
       - '3000:3000'
     environment:
       - NODE_ENV=production
-      - BACKEND_URL=${BACKEND_HOST}
+      - BACKEND_URL=http://backend:3001
     stdin_open: true
     tty: true
 
 volumes:
-  novetedlease_meili_data:
-    external: true
+  novetedlease_meili_data: {}
