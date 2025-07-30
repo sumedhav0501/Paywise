@@ -12,20 +12,26 @@ services:
     environment:
       - MEILI_ENV=production
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
-    volumes:
-      - novetedlease_meili_data:/meili_data
-      - meili_dumps:/meili_restore
+    ports:
+      - "7700:7700"
     entrypoint: >
       sh -c "
         if [ ! -f /meili_data/.restore_done ]; then
+          echo 'Checking existing data...';
+          if [ -d /meili_data/data.ms ]; then
+            echo 'Existing database directory found, deleting...';
+            rm -rf /meili_data/data.ms;
+          fi;
           echo 'Restoring from dump...';
           meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
           touch /meili_data/.restore_done;
         fi;
         meilisearch
       "
-    ports:
-      - "7700:7700"
+
+    volumes:
+      - ./meili_data:/meili_data
+      - ./meili_dumps:/meili_restore
 
   backend:
     build: ./backend
@@ -34,7 +40,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - MEILI_MASTER_KEY=6vYveICXxnbCICtAN7IwEtvGsXkV_7rEw-cOc3pq5mc
       - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
       - REDIS_HOST=redis
       - MEILISEARCH_HOST=${MEILISEARCH_HOST}
@@ -60,12 +66,4 @@ services:
     stdin_open: true
     tty: true
 
-volumes:
-  novetedlease_meili_data: {}
-  meili_dumps:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/meili_dumps
-
+volumes: {}
