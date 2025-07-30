@@ -7,22 +7,24 @@ services:
       - '6379:6379'
 
   meilisearch:
-    image: getmeili/meilisearch:v1.6.2
+    image: getmeili/meilisearch:v1.7
+    container_name: meilisearch
     environment:
-      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - MEILI_MASTER_KEY=your_strong_key
     volumes:
-      - novetedlease_meili_data:/meili_data
+      - meili_data:/meili_data
       - ./meili_dumps:/meili_restore
-    ports:
-      - '7700:7700'
-    command: >
+    entrypoint: >
       sh -c "
-        if [ -f /meili_restore/meilisearch-dump.dump ] && [ ! -f /meili_data/.restore_done ]; then
+        if [ ! -f /meili_data/.restore_done ]; then
+          echo 'Restoring from dump...';
           meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
           touch /meili_data/.restore_done;
-        fi &&
+        fi;
         meilisearch
       "
+    ports:
+      - "7700:7700"
   backend:
     build: ./backend
     ports:
