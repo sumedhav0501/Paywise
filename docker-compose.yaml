@@ -65,7 +65,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - '3000:3000'
+      - '5173:4173'
     environment:
       - NODE_ENV=production
       - BACKEND_URL=${BACKEND_HOST}
