@@ -68,7 +68,7 @@ services:
       - '5173:4173'
     environment:
       - NODE_ENV=production
-      - VITE_BACKEND_URL=${BACKEND_HOST}
+      - BACKEND_URL=${BACKEND_HOST}
     stdin_open: true
     tty: true
     depends_on:
