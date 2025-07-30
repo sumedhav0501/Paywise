@@ -7,7 +7,11 @@ services:
       - '6379:6379'
 
   meilisearch:
-    image: getmeili/meilisearch:v1.6.2
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM getmeili/meilisearch:v1.6.2
+        COPY meili_dumps/meilisearch-dump.dump /tmp/meilisearch-dump.dump
     container_name: meilisearch
     environment:
       - MEILI_ENV=production
@@ -16,10 +20,8 @@ services:
       - "7700:7700"
     entrypoint: >
       sh -c "
-        echo 'DEBUG: Checking /meili_restore directory contents:';
-        ls -la /meili_restore/;
-        echo 'DEBUG: Looking for dump file:';
-        ls -la /meili_restore/meilisearch-dump.dump 2>/dev/null || echo 'Dump file not found';
+        echo 'DEBUG: Checking if dump file exists in container:';
+        ls -la /tmp/meilisearch-dump.dump 2>/dev/null || echo 'Dump file not found in /tmp/';
         if [ ! -f /meili_data/.restore_done ]; then
           echo 'Checking existing data...';
           if [ -d /meili_data/data.ms ]; then
@@ -27,16 +29,15 @@ services:
             rm -rf /meili_data/data.ms;
           fi;
           echo 'Restoring from dump...';
-          meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
+          meilisearch --import-dump /tmp/meilisearch-dump.dump &&
           touch /meili_data/.restore_done;
         fi;
         meilisearch
       "
-
-
     volumes:
-      - ./meili_data:/meili_data
-      - ./meili_dumps:/meili_restore
+      - meili_data_vol:/meili_data
+    depends_on:
+      - redis
 
   backend:
     build: ./backend
@@ -45,7 +46,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - MEILI_MASTER_KEY=6vYveICXxnbCICtAN7IwEtvGsXkV_7rEw-cOc3pq5mc
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
       - REDIS_HOST=redis
       - MEILISEARCH_HOST=${MEILISEARCH_HOST}
@@ -70,5 +71,8 @@ services:
       - BACKEND_URL=${BACKEND_HOST}
     stdin_open: true
     tty: true
+    depends_on:
+      - backend
 
-volumes: {}
+volumes:
+  meili_data_vol:
