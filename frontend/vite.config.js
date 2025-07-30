@@ -12,9 +12,6 @@ export default defineConfig({
   build: {
     outDir: 'build', // ✅ Serve expects this folder
   },
-  preview: {
-    allowedHosts: ["api.dhonchak.dev"]
-  },
   server: {
     host: '0.0.0.0',
     port: 5173, // Dev mode

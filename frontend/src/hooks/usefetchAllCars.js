@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import supabase from '@/supabase/supabaseClient';
+import supabase from '@/supabase/supabaseClient';
 import { setAllCarsForTable } from '@/features/filtersSlice';
 
 const usefetchAllCars = () => {
@@ -39,7 +39,7 @@ const usefetchAllCars = () => {
     let keepFetching = true;
 
     while (keepFetching) {
-      // const { data, error } = await supabase.from(table).select('*').range(from, to);
+      const { data, error } = await supabase.from(table).select('*').range(from, to);
       if (error) throw error;
       allCars = allCars.concat(data);
       if (data.length < chunkSize) {

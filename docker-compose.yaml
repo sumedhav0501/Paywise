@@ -65,10 +65,10 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - '5173:4173'
+      - '3000:3000'
     environment:
       - NODE_ENV=production
-      - VITE_BACKEND_URL=http://api.dhonchak.dev
+      - BACKEND_URL=${BACKEND_HOST}
     stdin_open: true
     tty: true
     depends_on:
