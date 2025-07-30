@@ -25,8 +25,8 @@ services:
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
       - REDIS_HOST=redis
-      - MEILISEARCH_HOST=http://meilisearch:7700
-      - BACKEND_HOST=http://backend:3001
+      - MEILISEARCH_HOST=${MEILISEARCH_HOST}
+      - BACKEND_HOST=${BACKEND_HOST}
       - FRONTEND_URL=${FRONTEND_URL}
       - PFX_CERT_PATH=${PFX_CERT_PATH}
       - PFX_CERT_PASSWORD=${PFX_CERT_PASSWORD}
@@ -44,7 +44,7 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=production
-      - BACKEND_URL=http://backend:3001
+      - BACKEND_URL={BACKEND_HOST}
     stdin_open: true
     tty: true
 
