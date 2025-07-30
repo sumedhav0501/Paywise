@@ -16,13 +16,13 @@ services:
     ports:
       - '7700:7700'
     command: >
-      sh -c "if [ -f /meili_restore/meilisearch-dump.dump ] && [ ! -f /meili_data/.restore_done ]; then
-           meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
-           touch /meili_data/.restore_done;
-         else
-           meilisearch;
-         fi"
-
+      sh -c "
+        if [ -f /meili_restore/meilisearch-dump.dump ] && [ ! -f /meili_data/.restore_done ]; then
+          meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
+          touch /meili_data/.restore_done;
+        fi &&
+        meilisearch
+      "
   backend:
     build: ./backend
     ports:
