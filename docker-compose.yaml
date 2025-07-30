@@ -12,7 +12,7 @@ services:
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     volumes:
       - novetedlease_meili_data:/meili_data
-      - ./backend/meilisearch-dump.dump:/meili_restore/meilisearch-dump.dump
+      - ./meili_dumps:/meili_restore
     ports:
       - '7700:7700'
     command: >
@@ -22,7 +22,6 @@ services:
          else
            /usr/bin/meilisearch;
          fi"
-
 
   backend:
     build: ./backend
