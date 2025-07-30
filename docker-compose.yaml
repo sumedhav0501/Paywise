@@ -13,8 +13,8 @@ services:
       - MEILI_ENV=production
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     volumes:
-      - meili_data:/meili_data
-      - ./meili_dumps:/meili_restore
+      - novetedlease_meili_data:/meili_data
+      - meili_dumps:/meili_restore
     entrypoint: >
       sh -c "
         if [ ! -f /meili_data/.restore_done ]; then
@@ -26,6 +26,7 @@ services:
       "
     ports:
       - "7700:7700"
+
   backend:
     build: ./backend
     ports:
@@ -61,3 +62,10 @@ services:
 
 volumes:
   novetedlease_meili_data: {}
+  meili_dumps:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/meili_dumps
+
