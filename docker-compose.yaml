@@ -7,7 +7,7 @@ services:
       - '6379:6379'
 
   meilisearch:
-    image: getmeili/meilisearch:v1.7
+    image: getmeili/meilisearch:v1.6.2
     container_name: meilisearch
     environment:
       - MEILI_ENV=production
