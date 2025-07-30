@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const PAGE_SIZE = 4;
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://backend:3001';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
 export default function useFetchCars() {
   const filters = useSelector((state) => state.filters);

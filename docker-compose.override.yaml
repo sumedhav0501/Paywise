@@ -29,8 +29,8 @@ services:
       - MEILI_MASTER_KEY=supersecretkey
       - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
       - REDIS_HOST=redis
-      - MEILISEARCH_HOST=http://meilisearch:7700
-      - BACKEND_HOST=http://backend:3001
+      - MEILISEARCH_HOST=http://localhost:7700
+      - BACKEND_HOST=http://localhost:3001
     depends_on:
       - redis
       - meilisearch

@@ -3,7 +3,7 @@ const { index } = require('../utils/meilisearchClient');
 const axios = require('axios');
 require('dotenv').config();
 
-const BACKEND_URL = process.env.BACKEND_HOST || 'http://backend:3001';
+const BACKEND_URL = process.env.BACKEND_HOST || 'http://localhost:3001';
 const YEARS = ['2024', '2025']; // Add more years as needed
 
 async function fetchMakes() {

@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 
-const API_BASE = import.meta.env.VITE_BACKEND_URL || 'http://backend:3001';
+const API_BASE = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
 export default function useMeiliSearch() {
   const [results, setResults] = useState([]);
