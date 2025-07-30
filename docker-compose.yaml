@@ -17,11 +17,12 @@ services:
       - '7700:7700'
     command: >
       sh -c "if [ -f /meili_restore/meilisearch-dump.dump ] && [ ! -f /meili_data/.restore_done ]; then
-             ./meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
-             touch /meili_data/.restore_done;
-           else
-             ./meilisearch;
-           fi"
+           /usr/bin/meilisearch --import-dump /meili_restore/meilisearch-dump.dump &&
+           touch /meili_data/.restore_done;
+         else
+           /usr/bin/meilisearch;
+         fi"
+
 
   backend:
     build: ./backend
