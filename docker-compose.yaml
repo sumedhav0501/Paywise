@@ -10,7 +10,8 @@ services:
     image: getmeili/meilisearch:v1.7
     container_name: meilisearch
     environment:
-      - MEILI_MASTER_KEY=your_strong_key
+      - MEILI_ENV=production
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     volumes:
       - meili_data:/meili_data
       - ./meili_dumps:/meili_restore
