@@ -1,6 +1,6 @@
 // hooks/useCompareCars.js
 import { useEffect, useState } from "react";
-import supabase from "@/supabase/supabaseClient";
+
 
 const useCompareCars = (selectedTable) => {
   const [allCars, setAllCars] = useState([]);
@@ -18,7 +18,7 @@ const useCompareCars = (selectedTable) => {
 
     const fetchAllCars = async () => {
       try {
-        const { data, error } = await supabase.from(selectedTable).select("*");
+        // const { data, error } = await supabase.from(selectedTable).select("*");
         if (error) throw error;
         setAllCars(data);
         const uniqueBrands = [...new Set(data.map((car) => car.brand))];
