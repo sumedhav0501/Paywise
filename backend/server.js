@@ -14,7 +14,7 @@ const { handleSearch } = require('./controllers/searchController');
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: [process.env.FRONTEND_URL,"http://paywiselease.netlify.app"],
+  origin: [process.env.FRONTEND_URL,"https://paywiselease.netlify.app"],
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization',
 }));
