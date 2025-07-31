@@ -65,10 +65,20 @@ services:
     build: ./backend
     ports:
       - '3001:3001'
-    environment:
-      NODE_ENV: production
-      PORT: '3001'
-      # ... your other environment variables ...
+      - NODE_ENV=production
+      - PORT=3001
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - MEILI_PAGINATION_MAX_TOTAL_HITS=20000
+      - REDIS_HOST=redis
+      - MEILISEARCH_HOST=${MEILISEARCH_HOST}
+      - BACKEND_HOST=${BACKEND_HOST}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - PFX_CERT_PATH=${PFX_CERT_PATH}
+      - PFX_CERT_PASSWORD=${PFX_CERT_PASSWORD}
+      - API_ENDPOINT=${API_ENDPOINT}
+      - AZURE_TENANT_ID=${AZURE_TENANT_ID}
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
+      - API_SCOPE=${API_SCOPE}
     depends_on:
       - redis
       - meilisearch
