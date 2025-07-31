@@ -1,7 +1,7 @@
 // const redis = require('../utils/redisClient');
 const { index } = require('../utils/meilisearchClient');
 
-async function searchVehicles(query,carLimit=500) {
+async function searchVehicles(query,carLimit=1000) {
 
   // console.log(process.env.MEILI_MASTER_KEY);
   // const cacheKey = `search:${query.toLowerCase()}`;
