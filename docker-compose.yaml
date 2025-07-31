@@ -65,6 +65,7 @@ services:
     build: ./backend
     ports:
       - '3001:3001'
+    environment:
       - NODE_ENV=production
       - PORT=3001
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
